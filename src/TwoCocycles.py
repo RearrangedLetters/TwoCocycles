@@ -11,7 +11,5 @@ def is_two_cocycle(kappa, G):
     return True
 
 
-def get_single_cocycle(G, E):
+def get_cocycles(G, E):
     for_each_word_do(E, len(G), is_two_cocycle)
-
-
