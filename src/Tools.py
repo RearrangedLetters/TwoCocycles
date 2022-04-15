@@ -1,5 +1,9 @@
 import copy
 
+from src.LinearCombination import LinearCombination
+from src.Number import Number
+from src.Radical import Radical
+
 
 def __for_each_word_do_helper(Sigma, length, f, i, a):
     if i != length:
@@ -31,3 +35,14 @@ def get_all_words(Sigma, length):
     A = list()
     __get_all_words_helper(Sigma, length, 0, A, a)
     return A
+
+
+def to_int_linear_combination(w):
+    L = w.split("+")
+    scalars = list()
+    base = list()
+    for l in L:
+        V = l.split("*")
+        scalars.append(Number(int(V[0])))
+        base.append(Radical.from_str(V[1]))
+    return LinearCombination(base, scalars)
