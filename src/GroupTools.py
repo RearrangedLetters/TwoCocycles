@@ -12,10 +12,10 @@ def symmetric_group_functions(order):
     return S
 
 
-def apply_permutation(p, l):
-    m = [0 for _ in l]
-    for i in range(len(l)):
-        m[i] = l[p[i]]
+def apply_permutation(p, q):
+    m = [0 for _ in q]
+    for i in range(len(q)):
+        m[i] = q[p[i]]
     return m
 
 
@@ -41,6 +41,7 @@ def composite_permutations_to_function(p, q):
 def array_to_method(a):
     def f(x):
         return a[x]
+
     return f
 
 
