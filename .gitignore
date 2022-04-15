@@ -134,3 +134,4 @@ dmypy.json
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/TwoCocycles.iml
 /.idea/vcs.xml
+/Evaluation/out/
