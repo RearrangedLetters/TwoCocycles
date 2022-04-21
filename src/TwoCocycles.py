@@ -1,6 +1,6 @@
 from src.Radical import Radical
 from src.Tools import for_each_word_do
-from GroupTools import composite_permutations
+from GroupTools import composite_permutations, apply_galois_automorphism
 
 
 def eval_l(kappa, g, h, k):
@@ -17,12 +17,21 @@ def eval_l_numerical(kappa, g, h, k):
     return r
 
 
-def eval_r(kappa, g, h, k):
-    return Radical(1, 1, 1) * kappa(g, composite_permutations(h, k))  # replace 1 with g(kappa(h, k))
+def eval_r_g_constant(kappa, g, h, k):
+    return Radical(1, 1, 1) * kappa(g, composite_permutations(h, k))
 
 
-def eval_r_numerical(kappa, g, h, k):
-    return 1 * kappa(g, composite_permutations(h, k)).evaluate()  # replace 1 with g(kappa(h, k))
+def eval_r(kappa, g, h, k, omega, r):
+    return apply_galois_automorphism(g, r, omega, kappa(h, k)) * kappa(g, composite_permutations(h, k))
+
+
+def eval_r_numerical(kappa, g, h, k, omega, r):
+    return apply_galois_automorphism(g, r, omega, kappa(h, k)).evaluate() \
+           * kappa(g, composite_permutations(h, k)).evaluate()
+
+
+def eval_r_numerical_g_constant(kappa, g, h, k):
+    return 1 * kappa(g, composite_permutations(h, k)).evaluate()
 
 
 def is_two_cocycle(kappa, G):
