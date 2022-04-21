@@ -22,6 +22,16 @@ class LinearCombination:
     def get_base(self):
         return self.base
 
+    def set_base(self, base):
+        self.base = base
+
+    def apply_to_base(self, f):
+        C = list()
+        for b in self.base:
+            c = f(b)
+            C.append(c)
+        self.base = C
+
     def evaluate(self):
         value = 0
         for i in range(len(self.base)):

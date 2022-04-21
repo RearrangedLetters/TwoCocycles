@@ -36,3 +36,6 @@ class Radical(Number):
 
     def __eq__(self, other):
         return self.x == other.x and self.n == other.n and self.r == other.r
+
+    def __str__(self):
+        return self.show()
