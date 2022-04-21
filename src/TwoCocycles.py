@@ -41,7 +41,7 @@ def difference_numerical(kappa, G):
         for h in G:
             for k in G:
                 D.append(eval_l_numerical(kappa, g, h, k) - eval_r_numerical(kappa, g, h, k))
-    print(D)
+    return D
 
 
 def print_difference(kappa, G):

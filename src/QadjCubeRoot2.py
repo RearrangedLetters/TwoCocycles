@@ -43,13 +43,35 @@ def try_all_kappa_cache():
         TwoCocycles.difference_numerical(k, S3)
 
 
+def is_null_delta(v, d=10E-4):
+    return v - d <= 0 <= v + d
+
+
+def are_all_null_delta(V, d=10E-4):
+    for v in V:
+        if not is_null_delta(v, d):
+            return False
+    return True
+
+
+done = 0
+total = 2 ** (len(S3) ** 2)
+
+
 def get_and_test_kappa(w):
     def k(g, h):
         gt = tuple(g)
         ht = tuple(h)
         return w[m[gt, ht]]
-    output = open("Evaluation/out/test_01", "a")
-    TwoCocycles.difference_numerical(k, S3)
+
+    D = TwoCocycles.difference_numerical(k, S3)
+    if are_all_null_delta(D):
+        output.write(str([r.show() for r in w]) + "\n")
+        print("Found one!")
+
+
+output = open("../Evaluation/out/test_01", "w+")
+output.truncate()
 
 
 def try_all_kappa():
@@ -57,5 +79,6 @@ def try_all_kappa():
 
 
 try_all_kappa()
+output.close()
 
 # TwoCocycles.print_difference(trivial, S3)

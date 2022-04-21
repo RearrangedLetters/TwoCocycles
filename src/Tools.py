@@ -17,6 +17,7 @@ def __for_each_word_do_helper(Sigma, length, f, i, a):
 def for_each_word_do(Sigma, length, f):
     a = [Sigma[0]] * length
     f(a)
+    total = len(Sigma) ** length
     __for_each_word_do_helper(Sigma, length, f, 0, a)
 
 
