@@ -34,31 +34,31 @@ def eval_r_numerical_g_constant(kappa, g, h, k):
     return 1 * kappa(g, composite_permutations(h, k)).evaluate()
 
 
-def is_two_cocycle(kappa, G):
+def is_two_cocycle(kappa, G, omega, r):
     for g in G:
         for h in G:
             for k in G:
-                if eval_l(kappa, g, h, k) != eval_r(kappa, g, h, k):
+                if eval_l(kappa, g, h, k) != eval_r(kappa, g, h, k, omega, r):
                     return False
     print(kappa)
     return True
 
 
-def difference_numerical(kappa, G):
+def difference_numerical(kappa, G, omega, r):
     D = list()
     for g in G:
         for h in G:
             for k in G:
-                D.append(eval_l_numerical(kappa, g, h, k) - eval_r_numerical(kappa, g, h, k))
+                D.append(eval_l_numerical(kappa, g, h, k) - eval_r_numerical(kappa, g, h, k, omega, r))
     return D
 
 
-def print_difference(kappa, G):
+def print_difference(kappa, G, omega, r):
     D = list()
     for g in G:
         for h in G:
             for k in G:
-                D.append(eval_l(kappa, g, h, k).evaluate() - eval_r(kappa, g, h, k).evaluate())
+                D.append(eval_l(kappa, g, h, k).evaluate() - eval_r(kappa, g, h, k, omega, r).evaluate())
     print(D)
 
 
