@@ -1,4 +1,4 @@
-from src.Number import Number
+from src.Dump.Number import Number
 import re
 
 
@@ -14,7 +14,7 @@ class Radical(Number):
 
     @staticmethod
     def from_str(s):
-        true_radical_pattern = "([0-9]+)\^\(([0-9]+)/([0-9]+)\)"
+        true_radical_pattern = "([0-9]+)^\(([0-9]+)/([0-9]+)\)"
         if re.match(true_radical_pattern, s):
             matcher = re.search(true_radical_pattern, s)
             return Radical(matcher.group(1), matcher.group(2), matcher.group(3))
@@ -39,3 +39,6 @@ class Radical(Number):
 
     def __str__(self):
         return self.show()
+
+    def __pow__(self, power, modulo=None):
+        return Radical(self.x, power * self.n, self.r)

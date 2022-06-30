@@ -1,7 +1,7 @@
 import unittest
 
-from src.GroupTools import symmetric_group
-from src.RootOfUnity import RootsOfUnity, GeneralRootOfUnity
+from src.Dump.GroupTools import symmetric_group
+from src.Dump.RootOfUnity import RootsOfUnity, GeneralRootOfUnity
 
 
 class MyTestCase(unittest.TestCase):

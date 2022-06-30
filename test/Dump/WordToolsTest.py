@@ -1,5 +1,5 @@
 import unittest
-from src.TwoCocycles import *
+from src.Dump.Tools import for_each_word_do
 
 
 class MyTestCase(unittest.TestCase):

@@ -32,10 +32,16 @@ class LinearCombination:
             C.append(c)
         self.base = C
 
-    def evaluate(self):
+    def evaluate_radical(self):
         value = 0
         for i in range(len(self.base)):
             value = value + self.scalars[i].evaluate() * self.base[i].evaluate()
+        return value
+
+    def evaluate(self):
+        value = 0
+        for i in range(len(self.base)):
+            value = value + self.scalars[i] * self.base[i]
         return value
 
     def show(self):

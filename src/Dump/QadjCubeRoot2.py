@@ -1,9 +1,8 @@
-import itertools
+import cmath
 
-from src import TwoCocycles
-from src.GroupTools import symmetric_group
-import Tools
-from src.Radical import Radical
+from src.Dump import TwoCocycles, Tools
+from src.Dump.GroupTools import symmetric_group, to_int_map
+from src.Dump.Radical import Radical
 
 ###
 # The normal hull of Q(cube_root(2)) is a Galois extension of the rationals.
@@ -12,7 +11,8 @@ from src.Radical import Radical
 ###
 
 S3 = symmetric_group(3)
-
+r = Radical(2, 1, 3)
+omega = Radical(cmath.e, 2j*cmath.pi, 3)
 
 # print(S3)
 
@@ -21,12 +21,9 @@ def trivial(g, h):
     return 1
 
 
-def to_int_map(G, H):
-    return {e: i for i, e in enumerate(itertools.product(G, H))}
-
-
 # V = Tools.get_all_words(["1", "2^(1/3)"], length)
 m = to_int_map(S3, S3)
+print(m)
 
 
 def try_all_kappa_cache():
@@ -37,10 +34,10 @@ def try_all_kappa_cache():
         def k(g, h):
             gt = tuple(g)
             ht = tuple(h)
-            r = W[m[gt, ht] % length]
-            return r
+            ro = W[m[gt, ht] % length]
+            return ro
 
-        TwoCocycles.difference_numerical(k, S3)
+        TwoCocycles.difference_numerical(k, S3, r, omega)
 
 
 def is_null_delta(v, d=10E-4):
@@ -64,13 +61,13 @@ def get_and_test_kappa(w):
         ht = tuple(h)
         return w[m[gt, ht]]
 
-    D = TwoCocycles.difference_numerical(k, S3)
+    D = TwoCocycles.difference_numerical(k, S3, r, omega)
     if are_all_null_delta(D):
-        output.write(str([r.show() for r in w]) + "\n")
+        output.write(str([ro.show() for ro in w]) + "\n")
         print("Found one!")
 
 
-output = open("../Evaluation/out/test_01", "w+")
+output = open("../../Evaluation/out/test_01", "w+")
 output.truncate()
 
 

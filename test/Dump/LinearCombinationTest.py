@@ -1,8 +1,8 @@
 import unittest
 
-from src.LinearCombination import LinearCombination
-from src.Number import Number
-from src.Radical import Radical
+from src.Dump.LinearCombination import LinearCombination
+from src.Dump.Number import Number
+from src.Dump.Radical import Radical
 
 
 class MyTestCase(unittest.TestCase):

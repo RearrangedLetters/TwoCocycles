@@ -1,8 +1,8 @@
 import copy
 
-from src.LinearCombination import LinearCombination
-from src.Number import Number
-from src.Radical import Radical
+from src.Dump.LinearCombination import LinearCombination
+from src.Dump.Number import Number
+from src.Dump.Radical import Radical
 
 
 def __for_each_word_do_helper(Sigma, length, f, i, a):

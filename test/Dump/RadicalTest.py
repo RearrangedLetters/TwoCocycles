@@ -1,6 +1,6 @@
 import unittest
 
-from src.Radical import Radical
+from src.Dump.Radical import Radical
 
 
 class MyTestCase(unittest.TestCase):
