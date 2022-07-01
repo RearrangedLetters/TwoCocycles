@@ -1,20 +1,17 @@
 import random
 
-from src import RootOfUnity
+from Evaluation.QStar import *
 from Evaluation.C import GroupC
 from src.TwoCocycle import TwoCocycle
 from src.TwoCocycleCondition import *
 
-omega = RootOfUnity.root_of_unity(3)
-theta = np.cbrt(2)
-B = (1, theta, theta ** 2, omega, omega * theta, omega * (theta ** 2))
 G = GroupC.G
 
 q = [1, 0, 0, 0, 0, 0]
 r = [1, 0, 0, 0, 0, 0]
 n = [0, 0, 0, 0, 0, 0]
 mapping = [[q, q, n, n, n, n],
-           [G[1].apply(q), r, n, n, n, n],
+           [G[1].apply_elementwise_depr(q), r, n, n, n, n],
            [n, n, n, n, n, n],
            [n, n, n, n, n, n],
            [n, n, n, n, n, n],

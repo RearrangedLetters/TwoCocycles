@@ -2,12 +2,11 @@
 # Represents the group of automorphisms of the field extension of Q
 # by a third root of unity.
 ###
-
 from src import RootOfUnity
 from src.FieldAutomorphism import FieldAutomorphism
 from src.NumericalBase import NumericalBase
 
-B = NumericalBase([1, RootOfUnity.root_of_unity(3)])
+B = NumericalBase([1, RootOfUnity.root_of_unity(3), 1, 1, 1, 1])  # todo: This is probably the wrong base
 
 l_identity = lambda x: x
 identity = FieldAutomorphism(B, [l_identity, l_identity, l_identity, l_identity, l_identity, l_identity])

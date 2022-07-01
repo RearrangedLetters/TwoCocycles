@@ -17,13 +17,13 @@ class TwoCocycleCondition:
         return NumericalBase.eval(self.base, x)
 
     def evaluate_left(self, G, composition_table, two_cocycle, g, h, k):
-        first_result = two_cocycle.apply(g, h)
-        second_result = two_cocycle.apply(composition_table[g][h], k)
+        first_result = two_cocycle.apply_elementwise_depr(g, h)
+        second_result = two_cocycle.apply_elementwise_depr(composition_table[g][h], k)
         return self.__eval(first_result) * self.__eval(second_result)
 
     def evaluate_right(self, G, composition_table, two_cocycle, g, h, k):
-        first_result = (G[g].apply(two_cocycle.apply(h, k)))
-        second_result = two_cocycle.apply(g, composition_table[h][k])
+        first_result = (G[g].apply_elementwise_depr(two_cocycle.apply_elementwise_depr(h, k)))
+        second_result = two_cocycle.apply_elementwise_depr(g, composition_table[h][k])
         return self.__eval(first_result) * self.__eval(second_result)
 
     def is_local_cocycle(self, G, composition_table, two_cocycle, g, h, k):
