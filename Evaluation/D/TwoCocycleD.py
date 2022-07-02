@@ -2,10 +2,12 @@ import random
 
 from Evaluation.QStar import *
 from Evaluation.D import GroupD
+from Evaluation.C.GroupC import C
 from src.TwoCocycle import TwoCocycle
 from src.TwoCocycleCondition import *
 
-G = GroupD.G
+conjugate = C[1].apply
+D = GroupD.D
 
 q = [1, 0, 0, 0, 0, 0]
 r11 = q
@@ -26,5 +28,5 @@ checker = TwoCocycleCondition(B)
 # Check if the trivial condition holds
 ###
 two_cocycle = TwoCocycle(B, mapping)
-print(checker.is_cocycle(G, GroupD.cayley_table, two_cocycle))
-checker.print_full_eval(G, GroupD.cayley_table, two_cocycle)
+print(checker.is_cocycle(D, GroupD.cayley_table, two_cocycle))
+checker.print_full_eval(D, GroupD.cayley_table, two_cocycle)

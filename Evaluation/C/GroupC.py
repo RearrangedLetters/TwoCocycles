@@ -24,7 +24,7 @@ def conjugate(coordinate_vector):
 
 c = FieldAutomorphism(B, conjugate)
 
-G = (id, c)
+C = (id, c)
 
 cayley_table = [[0, 1, 0, 0, 0, 0],
                 [1, 0, 0, 0, 0, 0],

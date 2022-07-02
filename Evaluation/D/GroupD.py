@@ -25,7 +25,7 @@ def d2_fun(coordinate_vector):
 d = FieldAutomorphism(B, d_fun)
 d2 = FieldAutomorphism(B, d2_fun)
 
-G = (id, d, d2)
+D = (id, d, d2)
 
 cayley_table = [[0, 1, 2, 0, 0, 0],
                 [1, 2, 0, 0, 0, 0],
