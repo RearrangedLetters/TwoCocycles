@@ -6,7 +6,11 @@
 import numpy as np
 
 from src import RootOfUnity
+from src.FieldAutomorphism import FieldAutomorphism
 
 omega = RootOfUnity.root_of_unity(3)
 theta = np.cbrt(2)
 B = (1, theta, theta ** 2, omega, omega * theta, omega * (theta ** 2))
+
+
+id = FieldAutomorphism(B, lambda x: x)

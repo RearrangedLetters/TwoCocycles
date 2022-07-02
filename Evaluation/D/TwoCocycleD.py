@@ -8,22 +8,23 @@ from src.TwoCocycleCondition import *
 G = GroupD.G
 
 q = [1, 0, 0, 0, 0, 0]
-r11 = [1, 0, 0, 0, 0, 0]
-r12 = [1, 0, 0, 0, 0, 0]
-r21 = [1, 0, 0, 0, 0, 0]
-r22 = [1, 0, 0, 0, 0, 0]
+r11 = q
+r12 = q
+r21 = q
+r22 = q
 n = [0, 0, 0, 0, 0, 0]
 mapping = [[q, q, n, n, n, n],
-           [G[1].apply_elementwise_depr(q), r11, n, n, n, n],
-           [n, n, n, n, n, n],
-           [n, n, n, n, n, n],
-           [n, n, n, n, n, n],
-           [n, n, n, n, n, n]]
+           [conjugate(q), r11, r12, n, n, n],
+           [conjugate(q), r21, r22, n, n, n],
+           [conjugate(q), n, n, n, n, n],
+           [conjugate(q), n, n, n, n, n],
+           [conjugate(q), n, n, n, n, n]]
 
 checker = TwoCocycleCondition(B)
 
 ###
-# Check if the trivial condition holds, i.e. q = r in Q
+# Check if the trivial condition holds
 ###
 two_cocycle = TwoCocycle(B, mapping)
-print(checker.is_cocycle(G, GroupD.composition_table, two_cocycle))
+print(checker.is_cocycle(G, GroupD.cayley_table, two_cocycle))
+checker.print_full_eval(G, GroupD.cayley_table, two_cocycle)

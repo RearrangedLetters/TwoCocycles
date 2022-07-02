@@ -2,33 +2,33 @@
 # Represents the group of automorphisms of the field extension of Q
 # by a third root of unity.
 ###
-from src import RootOfUnity
+from Evaluation.QStar import *
 from src.FieldAutomorphism import FieldAutomorphism
-from src.NumericalBase import NumericalBase
 
-B = NumericalBase([1, RootOfUnity.root_of_unity(3), 1, 1, 1, 1])  # todo: This is probably the wrong base
 
-l_identity = lambda x: x
-identity = FieldAutomorphism(B, [l_identity, l_identity, l_identity, l_identity, l_identity, l_identity])
-conjugation = FieldAutomorphism(B, [l_identity, lambda x: -x, l_identity, l_identity, l_identity, l_identity])
+###
+# Realizes the complex conjugation on a coordinate vector respective
+# to the base given above. Most importantly: conj(omega) = -omega - 1
+###
+def conjugate(coordinate_vector):
+    assert len(coordinate_vector) == len(B)
+    y = coordinate_vector
+    x_1 = y[0] - y[3]
+    x_2 = y[1] - y[4]
+    x_3 = y[2] - y[5]
+    x_4 = -y[3]
+    x_5 = -y[4]
+    x_6 = -y[5]
+    return [x_1, x_2, x_3, x_4, x_5, x_6]
 
-G = (identity,
-     conjugation,
-     identity,
-     identity,
-     identity,
-     identity)
 
-composition_table_functions = [[identity, conjugation, identity, identity, identity, identity],
-                               [conjugation, identity, identity, identity, identity, identity],
-                               [identity, identity, identity, identity, identity, identity],
-                               [identity, identity, identity, identity, identity, identity],
-                               [identity, identity, identity, identity, identity, identity],
-                               [identity, identity, identity, identity, identity, identity]]
+c = FieldAutomorphism(B, conjugate)
 
-composition_table = [[0, 1, 0, 0, 0, 0],
-                     [1, 0, 0, 0, 0, 0],
-                     [0, 0, 0, 0, 0, 0],
-                     [0, 0, 0, 0, 0, 0],
-                     [0, 0, 0, 0, 0, 0],
-                     [0, 0, 0, 0, 0, 0]]
+G = (id, c)
+
+cayley_table = [[0, 1, 0, 0, 0, 0],
+                [1, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0]]

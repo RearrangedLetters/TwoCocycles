@@ -23,7 +23,7 @@ checker = TwoCocycleCondition(B)
 # Check if the trivial condition holds, i.e. q = r in Q
 ###
 two_cocycle = TwoCocycle(B, mapping)
-print(checker.is_cocycle(G, GroupC.composition_table, two_cocycle))
+print(checker.is_cocycle(G, GroupC.cayley_table, two_cocycle))
 
 
 ###
@@ -43,6 +43,6 @@ for a_11 in random.sample(range(-bound, bound), int(np.cbrt(num_tests))):
             b_13 = -a_13
             r = [b_11, b_12, b_13, 0, 0, 0]
             two_cocycle = TwoCocycle(B, mapping)
-            if not checker.is_cocycle(G, GroupC.composition_table, two_cocycle):
+            if not checker.is_cocycle(G, GroupC.cayley_table, two_cocycle):
                 areTwoCocycles = False
 print("Random tests yielded: " + str(areTwoCocycles))

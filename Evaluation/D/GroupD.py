@@ -5,8 +5,6 @@
 from Evaluation.QStar import *
 from src.FieldAutomorphism import FieldAutomorphism
 
-identity = lambda x: x
-
 
 def d_fun(coordinate_vector):
     assert len(coordinate_vector) == len(B)
@@ -21,18 +19,17 @@ def d_fun(coordinate_vector):
 
 
 def d2_fun(coordinate_vector):
-    assert len(coordinate_vector) == len(B)
     return d_fun(d_fun(coordinate_vector))
 
 
 d = FieldAutomorphism(B, d_fun)
 d2 = FieldAutomorphism(B, d2_fun)
 
-G = (identity, d, d2)
+G = (id, d, d2)
 
-composition_table = [[0, d, d2, 0, 0, 0],
-                     [d, d2, 0, 0, 0, 0],
-                     [d2, 0, d, 0, 0, 0],
-                     [0, 0, 0, 0, 0, 0],
-                     [0, 0, 0, 0, 0, 0],
-                     [0, 0, 0, 0, 0, 0]]
+cayley_table = [[0, 1, 2, 0, 0, 0],
+                [1, 2, 0, 0, 0, 0],
+                [2, 0, 1, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0]]
