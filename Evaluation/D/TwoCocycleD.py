@@ -10,17 +10,14 @@ conjugate = C[1].apply
 D = GroupD.D
 
 q = [1, 0, 0, 0, 0, 0]
-r11 = q
-r12 = q
-r21 = q
-r22 = q
 n = [0, 0, 0, 0, 0, 0]
-mapping = [[q, q, n, n, n, n],
-           [conjugate(q), r11, r12, n, n, n],
-           [conjugate(q), r21, r22, n, n, n],
-           [conjugate(q), n, n, n, n, n],
-           [conjugate(q), n, n, n, n, n],
-           [conjugate(q), n, n, n, n, n]]
+r11 = n
+r12 = n
+r21 = n
+r22 = n
+mapping = [[q, n, n],
+           [conjugate(q), r11, r12],
+           [conjugate(q), r21, r22]]
 
 checker = TwoCocycleCondition(B)
 
@@ -29,4 +26,4 @@ checker = TwoCocycleCondition(B)
 ###
 two_cocycle = TwoCocycle(B, mapping)
 print(checker.is_cocycle(D, GroupD.cayley_table, two_cocycle))
-checker.print_full_eval(D, GroupD.cayley_table, two_cocycle)
+

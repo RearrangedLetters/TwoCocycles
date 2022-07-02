@@ -5,17 +5,14 @@ from Evaluation.C import GroupC
 from src.TwoCocycle import TwoCocycle
 from src.TwoCocycleCondition import *
 
-G = GroupC.G
+C = GroupC.C
+conjugate = C[1].apply
 
 q = [1, 0, 0, 0, 0, 0]
-r = [1, 0, 0, 0, 0, 0]
 n = [0, 0, 0, 0, 0, 0]
-mapping = [[q, q, n, n, n, n],
-           [G[1].apply_elementwise_depr(q), r, n, n, n, n],
-           [n, n, n, n, n, n],
-           [n, n, n, n, n, n],
-           [n, n, n, n, n, n],
-           [n, n, n, n, n, n]]
+r = q
+mapping = [[q, q],
+           [conjugate(q), r]]
 
 checker = TwoCocycleCondition(B)
 
@@ -23,7 +20,7 @@ checker = TwoCocycleCondition(B)
 # Check if the trivial condition holds, i.e. q = r in Q
 ###
 two_cocycle = TwoCocycle(B, mapping)
-print(checker.is_cocycle(G, GroupC.cayley_table, two_cocycle))
+print(checker.is_cocycle(C, GroupC.cayley_table, two_cocycle))
 
 
 ###
@@ -43,6 +40,6 @@ for a_11 in random.sample(range(-bound, bound), int(np.cbrt(num_tests))):
             b_13 = -a_13
             r = [b_11, b_12, b_13, 0, 0, 0]
             two_cocycle = TwoCocycle(B, mapping)
-            if not checker.is_cocycle(G, GroupC.cayley_table, two_cocycle):
+            if not checker.is_cocycle(C, GroupC.cayley_table, two_cocycle):
                 areTwoCocycles = False
 print("Random tests yielded: " + str(areTwoCocycles))

@@ -31,7 +31,7 @@ class TwoCocycleCondition:
                                 self.evaluate_right(G, composition_table, two_cocycle, g, h, k))
 
     def is_cocycle(self, G, composition_table, two_cocycle):
-        size = len(self.base)
+        size = len(G)
         for g in range(size):
             for h in range(size):
                 for k in range(size):

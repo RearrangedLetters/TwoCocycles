@@ -4,9 +4,9 @@
 from Evaluation.C.GroupC import *
 from Evaluation.D.GroupD import *
 
-c = C.c
-d = D.d
-d2 = D.d2
+c = C[1]
+d = D[1]
+d2 = D[2]
 cd = FieldAutomorphism(B, lambda x: c.apply(d.apply(x)))
 cd2 = FieldAutomorphism(B, lambda x: c.apply(d2.apply(x)))
 
