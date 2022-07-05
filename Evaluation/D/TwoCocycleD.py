@@ -4,7 +4,7 @@ from Evaluation.QStar import *
 from Evaluation.D import GroupD
 from Evaluation.C.GroupC import C
 from src.TwoCocycle import TwoCocycle
-from src.TwoCocycleCondition import *
+from src.TwoCocycleTools import *
 
 conjugate = C[1].apply
 D = GroupD.D

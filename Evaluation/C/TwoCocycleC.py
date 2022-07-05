@@ -3,7 +3,7 @@ import random
 from Evaluation.QStar import *
 from Evaluation.C import GroupC
 from src.TwoCocycle import TwoCocycle
-from src.TwoCocycleCondition import *
+from src.TwoCocycleTools import *
 
 C = GroupC.C
 conjugate = C[1].apply

@@ -3,42 +3,43 @@
 ###
 from Evaluation.G.GroupG import *
 from Evaluation.QStar import *
+from src import Norms
 from src.TwoCocycle import TwoCocycle
-from src.TwoCocycleCondition import TwoCocycleCondition
+from src.TwoCocycleTools import TwoCocycleCondition
 
 conjugate = C[1].apply
 
 q = [1, 0, 0, 0, 0, 0]
 n = [0, 0, 0, 0, 0, 0]
-r11 = n
-r12 = n
-r13 = n
-r14 = n
-r15 = n
+r11 = q
+r12 = q
+r13 = q
+r14 = q
+r15 = q
 
-r21 = n
-r22 = n
-r23 = n
-r24 = n
-r25 = n
+r21 = q
+r22 = q
+r23 = q
+r24 = q
+r25 = q
 
-r31 = n
-r32 = n
-r33 = n
-r34 = n
-r35 = n
+r31 = q
+r32 = q
+r33 = q
+r34 = q
+r35 = q
 
-r41 = n
-r42 = n
-r43 = n
-r44 = n
-r45 = n
+r41 = q
+r42 = q
+r43 = q
+r44 = q
+r45 = q
 
-r51 = n
-r52 = n
-r53 = n
-r54 = n
-r55 = n
+r51 = q
+r52 = q
+r53 = q
+r54 = q
+r55 = q
 
 mapping = [[q,            q,   q,   q,   q,   q],
            [conjugate(q), r11, r12, r13, r14, r15],
@@ -49,8 +50,23 @@ mapping = [[q,            q,   q,   q,   q,   q],
 
 checker = TwoCocycleCondition(B)
 
+two_cocycle = TwoCocycle(B, mapping)
+
 ###
 # Check if the trivial condition holds
 ###
-two_cocycle = TwoCocycle(B, mapping)
 print(checker.is_cocycle(D, cayley_table, two_cocycle))
+
+
+def summed_difference_firsttwo(x_1, x_2):
+    q = [x_1, x_2, 0, 0, 0, 0]
+    mapping = [[q, q, q, q, q, q],
+               [conjugate(q), q, q, q, q, q],
+               [conjugate(q), q, q, q, q, q],
+               [conjugate(q), q, q, q, q, q],
+               [conjugate(q), q, q, q, q, q],
+               [conjugate(q), q, q, q, q, q]]
+    two_cocycle = TwoCocycle(B, mapping)
+    return checker.summed_difference(G, cayley_table, two_cocycle, Norms.complex_euclidean)
+
+
