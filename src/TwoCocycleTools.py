@@ -59,4 +59,21 @@ class TwoCocycleCondition:
                     right = self.evaluate_right(G, cayley_table, two_cocycle, g, h, k)
                     left_sum = left_sum + norm(left)
                     right_sum = right_sum + norm(right)
-        return (left_sum - right_sum) / (size ** 3) # todo: verify: summed_diff = 0 implies is_twococycle
+        return (left_sum - right_sum) / (size ** 3)  # todo: verify: summed_diff = 0 implies is_twococycle
+
+    def imag_summend_difference(self, G, cayley_table, two_cocycle, norm):
+        size = len(G)
+        left_sum = [0, 0]
+        right_sum = [0, 0]
+        for g in range(size):
+            for h in range(size):
+                for k in range(size):
+                    left = self.evaluate_left(G, cayley_table, two_cocycle, g, h, k)
+                    norm_left = norm(left)
+                    left_sum[0] = left_sum[0] + norm_left[0]
+                    left_sum[1] = left_sum[1] + norm_left[1]
+                    right = self.evaluate_right(G, cayley_table, two_cocycle, g, h, k)
+                    norm_right = norm(right)
+                    right_sum[0] = right_sum[0] + norm_right[0]
+                    right_sum[1] = right_sum[1] + norm_right[1]
+        return [(left_sum[0] - right_sum[0]) / (size ** 3), (left_sum[1] - right_sum[1]) / (size ** 3)]

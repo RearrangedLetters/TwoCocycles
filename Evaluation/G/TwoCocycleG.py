@@ -70,3 +70,39 @@ def summed_difference_firsttwo(x_1, x_2):
     return checker.summed_difference(G, cayley_table, two_cocycle, Norms.complex_euclidean)
 
 
+def extend_coordinates(z):
+    return [z[0], 0, 0, z[1], 0, 0]
+
+
+def extend_each_coordinate(R):
+    for i, r in enumerate(R):
+        for j, s in enumerate(R):
+            R[i][j] = extend_coordinates(R[i][j])
+    return R
+
+
+###
+# q is the value appearing in the first row of every 2-cocycle
+# conjugate(q) then is the value appearing in the first column
+# R is the matrix describing the remaining entries of the mapping
+# q and each entry of R is a tuple with two elements, the real and
+# complex parts which are then translated to 6-dim coordinate vectors
+# the group G can work with
+###
+def summed_difference_simplified(q, R):
+    q = extend_coordinates(q)
+    R = extend_each_coordinate(R)
+    mapping = [[q, q, q, q, q, q],
+               [conjugate(q), R[0][0], R[0][1], R[0][2], R[0][3], R[0][4]],
+               [conjugate(q), R[1][0], R[1][1], R[1][2], R[1][3], R[1][4]],
+               [conjugate(q), R[2][0], R[2][1], R[2][2], R[2][3], R[2][4]],
+               [conjugate(q), R[3][0], R[3][1], R[3][2], R[3][3], R[3][4]],
+               [conjugate(q), R[4][0], R[4][1], R[4][2], R[4][3], R[4][4]]]
+    two_cocycle = TwoCocycle(B, mapping)
+    return checker.imag_summend_difference(G, cayley_table, two_cocycle, Norms.complex_twodim)
+
+
+def summed_difference_simpl_const(q):
+    r = [[q[0], q[1]] for _ in range(5)]
+    R = [r for _ in range(5)]
+    return summed_difference_simplified(q, R)
