@@ -50,16 +50,14 @@ class TwoCocycleCondition:
 
     def summed_difference(self, G, cayley_table, two_cocycle, norm):
         size = len(G)
-        left_sum = 0
-        right_sum = 0
+        sum = 0
         for g in range(size):
             for h in range(size):
                 for k in range(size):
                     left = self.evaluate_left(G, cayley_table, two_cocycle, g, h, k)
                     right = self.evaluate_right(G, cayley_table, two_cocycle, g, h, k)
-                    left_sum = left_sum + norm(left)
-                    right_sum = right_sum + norm(right)
-        return (left_sum - right_sum) / (size ** 3)  # todo: verify: summed_diff = 0 implies is_twococycle
+                    sum = sum + norm(left - right)
+        return sum / (size ** 3)
 
     def imag_summend_difference(self, G, cayley_table, two_cocycle, norm):
         size = len(G)

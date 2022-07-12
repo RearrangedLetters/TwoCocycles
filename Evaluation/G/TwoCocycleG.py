@@ -55,7 +55,7 @@ two_cocycle = TwoCocycle(B, mapping)
 ###
 # Check if the trivial condition holds
 ###
-print(checker.is_cocycle(D, cayley_table, two_cocycle))
+# print(checker.is_cocycle(D, cayley_table, two_cocycle))
 
 
 def summed_difference_firsttwo(x_1, x_2):
@@ -75,10 +75,11 @@ def extend_coordinates(z):
 
 
 def extend_each_coordinate(R):
+    S = [[[0] for _ in range(5)] for _ in range(5)]
     for i, r in enumerate(R):
         for j, s in enumerate(R):
-            R[i][j] = extend_coordinates(R[i][j])
-    return R
+            S[i][j] = extend_coordinates(R[i][j])
+    return S
 
 
 ###
@@ -89,7 +90,7 @@ def extend_each_coordinate(R):
 # complex parts which are then translated to 6-dim coordinate vectors
 # the group G can work with
 ###
-def summed_difference_simplified(q, R):
+def summed_difference_simplified_imag(q, R):
     q = extend_coordinates(q)
     R = extend_each_coordinate(R)
     mapping = [[q, q, q, q, q, q],
@@ -102,7 +103,28 @@ def summed_difference_simplified(q, R):
     return checker.imag_summend_difference(G, cayley_table, two_cocycle, Norms.complex_twodim)
 
 
+def summed_difference_simplified(q, R):
+    q = extend_coordinates(q)
+    R = extend_each_coordinate(R)
+    mapping = [[q, q, q, q, q, q],
+               [conjugate(q), R[0][0], R[0][1], R[0][2], R[0][3], R[0][4]],
+               [conjugate(q), R[1][0], R[1][1], R[1][2], R[1][3], R[1][4]],
+               [conjugate(q), R[2][0], R[2][1], R[2][2], R[2][3], R[2][4]],
+               [conjugate(q), R[3][0], R[3][1], R[3][2], R[3][3], R[3][4]],
+               [conjugate(q), R[4][0], R[4][1], R[4][2], R[4][3], R[4][4]]]
+    two_cocycle = TwoCocycle(B, mapping)
+    return checker.summed_difference(G, cayley_table, two_cocycle, Norms.complex_euclidean)
+
+
 def summed_difference_simpl_const(q):
     r = [[q[0], q[1]] for _ in range(5)]
     R = [r for _ in range(5)]
     return summed_difference_simplified(q, R)
+
+
+def summed_difference_var(x):
+    q, R = [x[-1], x[-2]], x[:-2]
+    R = np.array(R)
+    R = R.reshape((5, 5, 2))
+    return summed_difference_simplified(q, R)
+

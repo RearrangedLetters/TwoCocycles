@@ -14,9 +14,6 @@ def complex_euclidean(z):
 # imag_part is the norm of the imaginary parts of z
 ###
 def complex_twodim(z, norm=euclidean):
-    real_part = 0
-    imag_part = 0
-    for x in z:
-        real_part = real_part + x.real ** 2
-        imag_part = imag_part + x.imag ** 2
+    real_part = z.real ** 2
+    imag_part = z.imag ** 2
     return [np.sqrt(real_part), np.sqrt(imag_part)]
