@@ -3,6 +3,7 @@
 ###
 from Evaluation.G.GroupG import *
 from Evaluation.QStar import *
+from Evaluation.Tools import extend_coordinates, extend_each_coordinate
 from src import Norms
 from src.TwoCocycle import TwoCocycle
 from src.TwoCocycleTools import TwoCocycleCondition
@@ -68,18 +69,6 @@ def summed_difference_firsttwo(x_1, x_2):
                [conjugate(q), q, q, q, q, q]]
     two_cocycle = TwoCocycle(B, mapping)
     return checker.summed_difference(G, cayley_table, two_cocycle, Norms.complex_euclidean)
-
-
-def extend_coordinates(z):
-    return [z[0], 0, 0, z[1], 0, 0]
-
-
-def extend_each_coordinate(R):
-    S = [[[0] for _ in range(5)] for _ in range(5)]
-    for i, r in enumerate(R):
-        for j, s in enumerate(R):
-            S[i][j] = extend_coordinates(R[i][j])
-    return S
 
 
 ###
