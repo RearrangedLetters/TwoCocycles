@@ -33,8 +33,6 @@ fig2.colorbar(contourplot)
 
 plt.ion()
 
-# Calculate roots here
-
 plt.pause(.25)
 
 plt.ioff()
