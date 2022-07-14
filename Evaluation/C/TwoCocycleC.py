@@ -1,11 +1,12 @@
 import random
 
-from Evaluation.QStar import *
 from Evaluation.C import GroupC
+from Evaluation.Tools import extend_coordinates
+from GroupC import *
+from src import Norms
 from src.TwoCocycle import TwoCocycle
 from src.TwoCocycleTools import *
 
-C = GroupC.C
 conjugate = C[1].apply
 
 q = [1, 0, 0, 0, 0, 0]
@@ -43,3 +44,14 @@ for a_11 in random.sample(range(-bound, bound), int(np.cbrt(num_tests))):
             if not checker.is_cocycle(C, GroupC.cayley_table, two_cocycle):
                 areTwoCocycles = False
 print("Random tests yielded: " + str(areTwoCocycles))
+
+
+def summed_difference_var(x):
+    r = [x[0], x[1]]
+    q = [x[2], x[3]]
+    q_conj = extend_coordinates([q[0], -q[1]])
+    r = extend_coordinates(r)
+    q = extend_coordinates(q)
+    two_cocycle = TwoCocycle(B, [[q, q],
+                                 [q_conj, r]])
+    return checker.summed_difference(C, cayley_table, two_cocycle, Norms.complex_euclidean)
