@@ -7,13 +7,11 @@ from src import Norms
 from src.TwoCocycle import TwoCocycle
 from src.TwoCocycleTools import *
 
-conjugate = C[1].apply
-
 q = [1, 0, 0, 0, 0, 0]
 n = [0, 0, 0, 0, 0, 0]
 r = q
 mapping = [[q, q],
-           [conjugate(q), r]]
+           [c.apply(q), r]]
 
 checker = TwoCocycleCondition(B)
 
@@ -49,9 +47,8 @@ print("Random tests yielded: " + str(areTwoCocycles))
 def summed_difference_var(x):
     r = [x[0], x[1]]
     q = [x[2], x[3]]
-    q_conj = extend_coordinates([q[0], -q[1]])
     r = extend_coordinates(r)
     q = extend_coordinates(q)
     two_cocycle = TwoCocycle(B, [[q, q],
-                                 [q_conj, r]])
+                                 [c.apply(q), r]])
     return checker.summed_difference(C, cayley_table, two_cocycle, Norms.complex_euclidean)

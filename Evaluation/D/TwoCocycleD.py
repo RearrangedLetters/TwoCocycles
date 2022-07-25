@@ -1,11 +1,8 @@
 from Evaluation.D.GroupD import *
-from Evaluation.C.GroupC import C
 from Evaluation.Tools import extend_coordinates, extend_each_coordinate
 from src import Norms
 from src.TwoCocycle import TwoCocycle
 from src.TwoCocycleTools import *
-
-conjugate = C[1].apply
 
 q = [1, 0, 0, 0, 0, 0]
 n = [0, 0, 0, 0, 0, 0]
@@ -14,8 +11,8 @@ r12 = n
 r21 = n
 r22 = n
 mapping = [[q, n, n],
-           [conjugate(q), r11, r12],
-           [conjugate(q), r21, r22]]
+           [d.apply(q), r11, r12],
+           [d2.apply(q), r21, r22]]
 
 checker = TwoCocycleCondition(B)
 
