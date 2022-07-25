@@ -9,8 +9,9 @@ from Evaluation.G.GroupG import *
 class GTwoCocyclesTest(unittest.TestCase):
     def test_is_twococycle_01(self):
         roots = parse_roots(26, "../Evaluation/G/twococycles")
-        twococycle = twococycle_from_root(roots[36])
+        twococycle = twococycle_from_root(roots[0])
         condition = TwoCocycleCondition(B)
+        print(twococycle.mapping)
         print("condition yields: "
               + str(condition.summed_difference(G, cayley_table, twococycle, complex_euclidean)))
 
