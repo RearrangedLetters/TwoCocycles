@@ -1,8 +1,8 @@
 from matplotlib import pyplot as plt
 
 
-def gather_plot_data(solutions, n, threshold=1):
-    R = [[[], []] for _ in range(n)]
+def gather_plot_data(solutions, k, threshold=1):
+    R = [[[], []] for _ in range(k)]
     C = []
     max_value = 0
     for solution in solutions:
@@ -16,19 +16,21 @@ def gather_plot_data(solutions, n, threshold=1):
     return R, C
 
 
-def grid_plot(solutions, cmap="viridis", save=False):
-    fig, ax = plt.subplots(6, 6)
-    R, C = gather_plot_data(solutions)
+def grid_plot(solutions, size, cmap="viridis", save=False):
+    k = (size - 1) ** 2 + 1
+    fig, ax = plt.subplots(size, size)
+    R, C = gather_plot_data(solutions, k)
     m = None
     for i, r in enumerate(R):
-        if i < 25:
-            axi = ax[int(i / 5) + 1][i % 5 + 1]
+        if i < k - 1:
+            axi = ax[int(i / (size - 1)) + 1][(i % (size - 1)) + 1]
             m = axi.scatter(r[0], r[1], s=2, c=C, cmap=cmap)
-        elif i == 25:
-            for j in range(6):
+        elif i == k - 1:
+            for j in range(size):
                 ax[0][j].scatter(r[0], r[1], s=2, c=C, cmap=cmap)
                 ax[j][0].scatter(r[0], r[1], s=2, c=C, cmap=cmap)
-    plt.colorbar(m, ax=ax)
+    if m:
+        plt.colorbar(m, ax=ax)
     if save:
         plt.savefig("gridplot.png")
     plt.show()
