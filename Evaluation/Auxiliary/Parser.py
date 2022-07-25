@@ -6,8 +6,8 @@ from Evaluation.Auxiliary.Solution import Solution
 def parse_roots(n, file="twococycles"):
     with open(file) as f:
         lines = f.readlines()
-    pattern_var1 = "(-?\\d\\.\\d{8,}e\\+?-?\\d{2})(\\s{0,}|\\])"
-    pattern_var2 = "(-?\\d\\.\\d{4,})(\\s+|\\])"
+    pattern_var1 = "(-?\\d\\.\\d+e\\+?-?\\d{2})(\\s{0,}|\\])"
+    pattern_var2 = "(-?\\d\\.\\d+)(\\s+|\\])"
     roots = list()
     root = list()
     for line in lines:
