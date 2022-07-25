@@ -1,5 +1,5 @@
 from Evaluation.D.GroupD import *
-from Evaluation.Tools import extend_coordinates, extend_each_coordinate
+from Evaluation.Auxiliary.Reformatting import extend_coordinates, extend_each_coordinate
 from src import Norms
 from src.TwoCocycle import TwoCocycle
 from src.TwoCocycleTools import *

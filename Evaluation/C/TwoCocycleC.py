@@ -1,7 +1,7 @@
 import random
 
 from Evaluation.C import GroupC
-from Evaluation.Tools import extend_coordinates
+from Evaluation.Auxiliary.Reformatting import extend_coordinates
 from GroupC import *
 from src import Norms
 from src.TwoCocycle import TwoCocycle

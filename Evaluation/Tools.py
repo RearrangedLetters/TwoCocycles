@@ -75,15 +75,3 @@ def gather_two_cocycles(f, k, num=1000, bound=5, method="Powell", file="twococyc
         if is_nonzero:
             count = count + 1
             print(f"Found {count} out of {num}")
-
-
-def extend_coordinates(z):
-    return [z[0], 0, 0, z[1], 0, 0]
-
-
-def extend_each_coordinate(R):
-    S = [[[0] for _ in range(5)] for _ in range(5)]
-    for i, r in enumerate(R):
-        for j, s in enumerate(R):
-            S[i][j] = extend_coordinates(R[i][j])
-    return S

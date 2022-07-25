@@ -1,4 +1,3 @@
-from Evaluation.Tools import extend_coordinates, extend_each_coordinate
 from Evaluation.G.GroupG import *
 from src.TwoCocycle import TwoCocycle
 
@@ -13,3 +12,15 @@ def two_cocycle_from_simplified(q, R):
                [cd.apply(q), R[3][0], R[3][1], R[3][2], R[3][3], R[3][4]],
                [cd2.apply(q), R[4][0], R[4][1], R[4][2], R[4][3], R[4][4]]]
     return TwoCocycle(B, mapping)
+
+
+def extend_coordinates(z):
+    return [z[0], 0, 0, z[1], 0, 0]
+
+
+def extend_each_coordinate(R):
+    S = [[[0] for _ in range(5)] for _ in range(5)]
+    for i, r in enumerate(R):
+        for j, s in enumerate(R):
+            S[i][j] = extend_coordinates(R[i][j])
+    return S
