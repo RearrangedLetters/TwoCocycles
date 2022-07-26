@@ -16,7 +16,7 @@ def matrix_to_latex_tablebody(row_labels, M):
     return body.replace("  ", " ")
 
 
-def to_latex_tabular(line=33):
+def to_latex_tabular(line=1):
     index = int(line / 17)
     twococycle = twococycle_from_root(parse_roots(26, "../G/twococycles")[index])
     table_header = "\\begin{tabular}{rcccccc}" \
@@ -27,4 +27,4 @@ def to_latex_tabular(line=33):
     return table_header + table_body + table_footer
 
 
-print(to_latex_tabular())
+print(to_latex_tabular(33))
