@@ -10,7 +10,7 @@ from src.FieldAutomorphism import FieldAutomorphism
 # Realizes the complex conjugation on a coordinate vector respective
 # to the base given above. Most importantly: conj(omega) = -omega - 1
 ###
-def conjugate(coordinate_vector):  # todo: this method most likely has a bug
+def conjugate(coordinate_vector):
     assert len(coordinate_vector) == len(B)
     y = coordinate_vector
     x_1 = y[0] - y[3]
