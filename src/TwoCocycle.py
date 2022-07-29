@@ -1,7 +1,8 @@
 class TwoCocycle:
-    def __init__(self, base, mapping):
+    def __init__(self, group, base, mapping):
+        self.group = group
         self.base = base
         self.mapping = mapping
 
-    def apply(self, g, h):
+    def evaluate(self, g, h):
         return self.mapping[g][h]

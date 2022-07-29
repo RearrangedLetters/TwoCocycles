@@ -2,7 +2,7 @@ import re
 
 from Evaluation.Auxiliary.Reformatting import two_cocycle_from_simplified
 from Evaluation.Auxiliary.Solution import Solution
-from Evaluation.G.GroupG import *
+from Evaluation.G.G import *
 
 
 def parse_roots(n, file="twococycles"):

@@ -1,16 +1,8 @@
 ###
 # The Galois group G of Q_* over Q.
 ###
-from Evaluation.C.GroupC import *
-from Evaluation.D.GroupD import *
-
-c = C[1]
-d = D[1]
-d2 = D[2]
-cd = FieldAutomorphism(B, lambda x: c.apply(d.apply(x)))
-cd2 = FieldAutomorphism(B, lambda x: c.apply(d2.apply(x)))
-
-G = (id, d, d2, c, cd, cd2)
+from src.Group import Group
+from Evaluation.QStar import Q_star
 
 cayley_table = [[0, 1, 2, 3, 4, 5],
                 [1, 2, 0, 5, 3, 4],
@@ -18,3 +10,5 @@ cayley_table = [[0, 1, 2, 3, 4, 5],
                 [3, 4, 5, 0, 1, 2],
                 [4, 5, 3, 2, 0, 1],
                 [5, 3, 4, 1, 2, 0]]
+
+G = Group(Q_star.field_automorphisms, cayley_table)

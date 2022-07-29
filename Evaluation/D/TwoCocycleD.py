@@ -1,4 +1,4 @@
-from Evaluation.D.GroupD import *
+from Evaluation.D.D import *
 from Evaluation.Auxiliary.Reformatting import extend_coordinates, extend_each_coordinate
 from src import Norms
 from src.TwoCocycle import TwoCocycle
@@ -11,15 +11,15 @@ r12 = n
 r21 = n
 r22 = n
 mapping = [[q, n, n],
-           [d.apply(q), r11, r12],
-           [d2.apply(q), r21, r22]]
+           [d.evaluate(q), r11, r12],
+           [d2.evaluate(q), r21, r22]]
 
-checker = TwoCocycleCondition(B)
+checker = TwoCocycleTools(base)
 
 ###
 # Check if the trivial condition holds
 ###
-two_cocycle = TwoCocycle(B, mapping)
+two_cocycle = TwoCocycle(base, mapping)
 print(checker.is_cocycle(D, cayley_table, two_cocycle))
 
 
@@ -33,5 +33,5 @@ def summed_difference_var(x):
     mapping = [[q, q, q],
                [q_conj, R[0][0], R[0][1]],
                [q_conj, R[1][0], R[1][1]]]
-    two_cocycle = TwoCocycle(B, mapping)
+    two_cocycle = TwoCocycle(base, mapping)
     return checker.summed_difference(D, cayley_table, two_cocycle, Norms.complex_euclidean)

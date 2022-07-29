@@ -1,8 +1,8 @@
 import random
 
-from Evaluation.C import GroupC
+from Evaluation.C import C
 from Evaluation.Auxiliary.Reformatting import extend_coordinates
-from GroupC import *
+from C import *
 from src import Norms
 from src.TwoCocycle import TwoCocycle
 from src.TwoCocycleTools import *
@@ -11,14 +11,14 @@ q = [1, 0, 0, 0, 0, 0]
 n = [0, 0, 0, 0, 0, 0]
 r = q
 mapping = [[q, q],
-           [c.apply(q), r]]
+           [c.evaluate(q), r]]
 
-checker = TwoCocycleCondition(B)
+checker = TwoCocycleTools(base)
 
 ###
 # Check if the trivial condition holds, i.e. q = r in Q
 ###
-two_cocycle = TwoCocycle(B, mapping)
+two_cocycle = TwoCocycle(base, mapping)
 print(checker.is_cocycle(C, GroupC.cayley_table, two_cocycle))
 
 
@@ -38,7 +38,7 @@ for a_11 in random.sample(range(-bound, bound), int(np.cbrt(num_tests))):
             b_12 = -a_12
             b_13 = -a_13
             r = [b_11, b_12, b_13, 0, 0, 0]
-            two_cocycle = TwoCocycle(B, mapping)
+            two_cocycle = TwoCocycle(base, mapping)
             if not checker.is_cocycle(C, GroupC.cayley_table, two_cocycle):
                 areTwoCocycles = False
 print("Random tests yielded: " + str(areTwoCocycles))
@@ -49,6 +49,6 @@ def summed_difference_var(x):
     q = [x[2], x[3]]
     r = extend_coordinates(r)
     q = extend_coordinates(q)
-    two_cocycle = TwoCocycle(B, [[q, q],
-                                 [c.apply(q), r]])
+    two_cocycle = TwoCocycle(base, [[q, q],
+                                    [c.evaluate(q), r]])
     return checker.summed_difference(C, cayley_table, two_cocycle, Norms.complex_euclidean)
