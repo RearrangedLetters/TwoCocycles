@@ -16,14 +16,14 @@ class Solver:
         self.zero_range = zero_range
         self.max_error = max_error
         self.order = len(self.group.elements)
-        self.dimension = ((self.order - 1) ** 2) * self.order + self.order
+        self.dimension = ((self.order - 1) ** 2) * len(self.base) + len(self.base)
 
     def gather_two_cocycle_candidates(self, attempts=1, bound=1, method="BFGS", file="two_cocycles"):
         f = self.__summed_difference_flattened
         count = 0
         attempt = 1
-        while count < attempts:
-            print(f"Attempt {attempt} out of {attempts}")
+        while attempt < attempts:
+            print(f"\nAttempt {attempt} out of {attempts}")
             start = self.__gather_starting_points(1, self.dimension, bound)[0]
             is_nonzero = self.__minimize_and_save(f, start, method, file)
             if is_nonzero:
@@ -31,9 +31,13 @@ class Solver:
                 print(f"Found a candidate! In total {count} additional candidates were saved to {file}!")
             attempt = attempt + 1
 
+    def gather_two_cocycle_candidates_simplified(self, positions, attempts=1, bound=1,
+                                                 method="BFGS", file="two_cocycles"):
+        pass
+
     def __summed_difference_flattened(self, x):
-        q = np.array([x[i] for i in range(self.dimension - self.order, self.dimension)])
-        R = np.array(x[:self.dimension - self.order]).reshape((self.order - 1, self.order - 1, self.order))
+        q = np.array([x[i] for i in range(self.dimension - len(self.base), self.dimension)])
+        R = np.array(x[:self.dimension - len(self.base)]).reshape((self.order - 1, self.order - 1, len(self.base)))
         two_cocycle = two_cocycle_from(q, R, self.group, self.base)
         tool = TwoCocycleTools(two_cocycle)
         return tool.summed_difference(norm=Norms.complex_euclidean)
@@ -57,7 +61,7 @@ class Solver:
         start = time.time()
         result = minimize(f, x0, method=method)
         duration = time.time() - start
-        print(f"\nA calculation has completed, took {duration}s")
+        print(f"A calculation has completed, took {duration}s")
         for i in range(0, len(result.x) - 1, 2):
             if Norms.euclidean([result.x[i], result.x[i + 1]]) < self.zero_range:
                 print("Solution declined, is 0 somewhere")
@@ -65,11 +69,16 @@ class Solver:
 
         if result.fun < self.max_error:
             with open(file, "a") as file_object:
-                file_object.write(str(result.x) + "\n")
+                file_object.write(self.__list_to_string(result.x) + "\n")
                 file_object.write(str(result.fun) + "\n\n")
                 file_object.close()
-            print("A result has been saved!")
             return True
         else:
             print("Accuracy was not achieved, average error is: " + str(result.fun))
             return False
+
+    def __list_to_string(self, L):
+        string = ""
+        for l in L:
+            string = string + str(l) + ";"
+        return string[:-1]

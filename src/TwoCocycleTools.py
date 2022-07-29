@@ -41,7 +41,7 @@ class TwoCocycleTools:
         return True
 
     def print_full_eval(self):
-        size = len(self.base)
+        size = len(self.group.elements)
         for g in range(size):
             for h in range(size):
                 for k in range(size):
@@ -50,7 +50,7 @@ class TwoCocycleTools:
                     print("(" + str(g) + ", " + str(h) + ", " + str(k) + ") \nl = " + str(left) + "\nr = " + str(right))
 
     def summed_difference(self, norm=Norms.euclidean):
-        size = len(self.base)
+        size = len(self.group.elements)
         sum = 0
         for g in range(size):
             for h in range(size):

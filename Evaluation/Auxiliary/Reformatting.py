@@ -2,8 +2,7 @@ from src.TwoCocycle import TwoCocycle
 
 
 def two_cocycle_from(q, R, group, base):
-    size = range(len(base))
-    mapping = [[] for _ in size]
+    mapping = [[] for _ in (range(len(base)))]
     for i in range(len(R) + 1):
         for j in range(len(R) + 1):
             if i == 0 or j == 0:
