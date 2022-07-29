@@ -41,8 +41,18 @@ def count_empty(file="twococycles"):
     return count
 
 
-def twococycle_from_root(solution):
-    root = solution.root
-    q = root[25]
-    R = np.array(root[:25]).reshape((5, 5, 2))
+def twococycle_from_array(x):
+    q = x[25]
+    R = np.array(x[:25]).reshape((5, 5, 2))
     return two_cocycle_from_simplified(q, R)
+
+
+def twococycle_from_root(solution):
+    return twococycle_from_array(solution.root)
+
+
+def twococycle_from_optimize_result(result):
+    x = list()
+    for i in range(0, len(result.x) - 1, 2):
+        x.append([result.x[i], result.x[i + 1]])
+    return twococycle_from_array(x)

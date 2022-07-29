@@ -3,10 +3,13 @@ import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 
-import numpy as np
 from scipy.optimize import minimize
 
+from Evaluation.Auxiliary.Parser import twococycle_from_root, twococycle_from_optimize_result
+from Evaluation.G.GroupG import *
+from Evaluation.QStar import B
 from src import Norms
+from src.TwoCocycleTools import TwoCocycleCondition
 
 
 def print_opt_result(result):
@@ -37,24 +40,34 @@ def minimize_from(f, x0, method):
     return result.x, result.success
 
 
-def minimize_and_save(f, x0, method, file):
+def minimize_and_save(f, x0, method, file, threshold=1e-3):
     start = time.time()
-    result = minimize(f, x0, method=method)
+    result = minimize(f, x0, method=method, options={"ftol": 1e-6, "maxiter": len(x0) * 200})
     duration = time.time() - start
-    print(f"A calculation was successful, took {duration}s!")
-    R = result.x[:-2]
-    q = result.x[-2:]
-    if Norms.euclidean(R) > 1e-2 and Norms.euclidean(q) > 1e-3:
+    print(f"\nA calculation has completed, took {duration}s")
+    for i in range(0, len(result.x) - 1, 2):
+        if Norms.euclidean([result.x[i], result.x[i + 1]]) < threshold:
+            print("Solution declined, is 0 somewhere")
+            return False
+
+    twococycle = twococycle_from_optimize_result(result)
+    condition = TwoCocycleCondition(B)
+    error = condition.summed_difference(G, cayley_table=cayley_table,
+                                        two_cocycle=twococycle, norm=Norms.complex_euclidean)
+
+    if error < 1e-4:
         with open(file, "a") as file_object:
             file_object.write(str(result.x))
             file_object.write("\n")
             file_object.write(str(result.success))
             file_object.write("\n")
-            file_object.write(str(result.fun))
+            file_object.write(str(error))
             file_object.write("\n\n")
             file_object.close()
+        print("A result has been saved!")
         return True
     else:
+        print("Accuracy was not achieved, average error is: " + str(error))
         return False
 
 

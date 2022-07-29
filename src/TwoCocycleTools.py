@@ -1,6 +1,6 @@
 import numpy as np
 
-from src import NumericalBase
+from src import NumericalBase, Norms
 
 
 class TwoCocycleCondition:
@@ -48,7 +48,7 @@ class TwoCocycleCondition:
                     right = self.evaluate_right(G, cayley_table, two_cocycle, g, h, k)
                     print("(" + str(g) + ", " + str(h) + ", " + str(k) + ") \nl = " + str(left) + "\nr = " + str(right))
 
-    def summed_difference(self, G, cayley_table, two_cocycle, norm):
+    def summed_difference(self, G, cayley_table, two_cocycle, norm=Norms.euclidean):
         size = len(G)
         sum = 0
         for g in range(size):

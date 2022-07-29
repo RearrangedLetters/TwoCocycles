@@ -9,7 +9,7 @@ from Evaluation.G.GroupG import *
 class GTwoCocyclesTest(unittest.TestCase):
     def test_is_twococycle_01(self):
         roots = parse_roots(26, "../Evaluation/G/twococycles")
-        twococycle = twococycle_from_root(roots[2])  # #9, #11, #21 are reasonably good #8 is better #1, #2 are great
+        twococycle = twococycle_from_root(roots[6])
         condition = TwoCocycleCondition(B)
         print(twococycle.mapping)
         print("condition yields: "
