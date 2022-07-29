@@ -69,5 +69,5 @@ def summed_difference_simplified(q, R):
 
 
 def summed_difference_var(x):
-    q, R = [x[-1], x[-2]], np.array(x[:-2]).reshape((5, 5, 2))
+    q, R = [x[-2], x[-1]], np.array(x[:-2]).reshape((5, 5, 2))
     return summed_difference_simplified(q, R)

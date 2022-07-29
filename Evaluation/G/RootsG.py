@@ -3,4 +3,4 @@ from Evaluation.Tools import gather_two_cocycles
 
 f = summed_difference_var
 
-gather_two_cocycles(f, 52, num=100, bound=10, method="L-BFGS-B")
+gather_two_cocycles(f, 52, num=100, bound=1, method="BFGS")

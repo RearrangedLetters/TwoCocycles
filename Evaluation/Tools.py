@@ -21,9 +21,19 @@ def print_opt_result(result):
           f"{result.nit} iterations.")
 
 
+def any_is_zero(x):
+    for i in x:
+        if abs(i) < 1e-3:
+            return True
+    return False
+
+
 def gather_starting_points(n, k, bound=1):
     starts = list()
     for _ in range(n):
+        x = np.random.rand(k)
+        while any_is_zero(x):
+            x = np.random.rand(k)
         starts.append(np.random.rand(k))
     return np.array([x * bound for x in starts])
 
@@ -42,7 +52,7 @@ def minimize_from(f, x0, method):
 
 def minimize_and_save(f, x0, method, file, threshold=1e-3):
     start = time.time()
-    result = minimize(f, x0, method=method, options={"ftol": 1e-6, "maxiter": len(x0) * 200})
+    result = minimize(f, x0, method=method)
     duration = time.time() - start
     print(f"\nA calculation has completed, took {duration}s")
     for i in range(0, len(result.x) - 1, 2):
