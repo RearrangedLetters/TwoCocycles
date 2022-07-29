@@ -2,13 +2,14 @@ from src.TwoCocycle import TwoCocycle
 
 
 def two_cocycle_from(q, R, group, base):
-    mapping = [[]]
+    size = range(len(base))
+    mapping = [[] for _ in size]
     for i in range(len(R) + 1):
         for j in range(len(R) + 1):
-            if i == 0:
-                mapping[i].append(q)
+            if i == 0 or j == 0:
+                mapping[i].append(group.elements[i].apply(q))
             else:
-                mapping[i][j].append(R[i][j])
+                mapping[i].append(R[i - 1][j - 1])
     return TwoCocycle(group, base, mapping)
 
 

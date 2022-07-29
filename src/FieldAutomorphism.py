@@ -19,12 +19,6 @@ class FieldAutomorphism:
         self.base = base
         self.automorphism = automorphism
 
-    def apply_elementwise_depr(self, vector):
-        trans_vector = list()
-        for i, phi in enumerate(self.automorphism):
-            trans_vector.append(phi(vector[i]))
-        return trans_vector
-
     def apply(self, vector):
         return self.automorphism(vector)
 

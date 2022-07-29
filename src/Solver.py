@@ -16,9 +16,9 @@ class Solver:
         self.zero_range = zero_range
         self.max_error = max_error
         self.order = len(self.group.elements)
-        self.dimension = ((self.order - 1) ** 2) * self.order + 2
+        self.dimension = ((self.order - 1) ** 2) * self.order + self.order
 
-    def gather_solutions(self, attempts=1, bound=1, method="BFGS", file="two_cocycles"):
+    def gather_two_cocycle_candidates(self, attempts=1, bound=1, method="BFGS", file="two_cocycles"):
         f = self.__summed_difference_flattened
         count = 0
         attempt = 1
@@ -28,15 +28,15 @@ class Solver:
             is_nonzero = self.__minimize_and_save(f, start, method, file)
             if is_nonzero:
                 count = count + 1
-                print(f"Found another candidate! In total {count} candidates were saved to {file}!")
+                print(f"Found a candidate! In total {count} additional candidates were saved to {file}!")
             attempt = attempt + 1
 
     def __summed_difference_flattened(self, x):
         q = np.array([x[i] for i in range(self.dimension - self.order, self.dimension)])
-        R = np.array(x[:-self.order]).reshape((self.order - 1, self.order - 1, self.order))
+        R = np.array(x[:self.dimension - self.order]).reshape((self.order - 1, self.order - 1, self.order))
         two_cocycle = two_cocycle_from(q, R, self.group, self.base)
         tool = TwoCocycleTools(two_cocycle)
-        return tool.summed_difference()
+        return tool.summed_difference(norm=Norms.complex_euclidean)
 
     def __any_is_zero(self, x):
         for i in x:
@@ -65,12 +65,8 @@ class Solver:
 
         if result.fun < self.max_error:
             with open(file, "a") as file_object:
-                file_object.write(str(result.x))
-                file_object.write("\n")
-                file_object.write(str(result.success))
-                file_object.write("\n")
-                file_object.write(str(result.fun))
-                file_object.write("\n\n")
+                file_object.write(str(result.x) + "\n")
+                file_object.write(str(result.fun) + "\n\n")
                 file_object.close()
             print("A result has been saved!")
             return True

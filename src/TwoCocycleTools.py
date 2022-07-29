@@ -24,7 +24,7 @@ class TwoCocycleTools:
         return self.__eval(first_result) * self.__eval(second_result)
 
     def evaluate_right(self, g, h, k):
-        first_result = (self.group.elements[g].evaluate(self.two_cocycle.evaluate(h, k)))
+        first_result = (self.group.elements[g].apply(self.two_cocycle.evaluate(h, k)))
         second_result = self.two_cocycle.evaluate(g, self.group.cayley_table[h][k])
         return self.__eval(first_result) * self.__eval(second_result)
 
