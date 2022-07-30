@@ -3,7 +3,7 @@ import time
 import numpy as np
 from scipy.optimize import minimize
 
-from Evaluation.Auxiliary.Reformatting import two_cocycle_from_flat
+from Evaluation.Auxiliary.Reformatting import two_cocycle_from_flat, two_cocycle_from_flat_simplified
 from src import Norms
 from src.NumericalBase import NumericalBase
 from src.TwoCocycleTools import TwoCocycleTools
@@ -20,6 +20,14 @@ class Solver:
 
     def gather_two_cocycle_candidates(self, attempts=1, bound=1, method="BFGS", file="two_cocycles"):
         f = self.__summed_difference_flattened
+        self.__gather_candidates(f, attempts, bound, method, file)
+
+    def gather_two_cocycle_candidates_simplified(self, positions, attempts=1, bound=1,
+                                                 method="BFGS", file="two_cocycles"):
+        f = lambda x: self.__summed_difference_flattened_simplified(x, positions)
+        self.__gather_candidates(f, attempts, bound, method, file)
+
+    def __gather_candidates(self, f, attempts=1, bound=1, method="BFGS", file="two_cocycles"):
         count = 0
         attempt = 1
         while attempt < attempts:
@@ -31,12 +39,13 @@ class Solver:
                 print(f"Found a candidate! In total {count} additional candidates were saved to {file}!")
             attempt = attempt + 1
 
-    def gather_two_cocycle_candidates_simplified(self, positions, attempts=1, bound=1,
-                                                 method="BFGS", file="two_cocycles"):
-        pass
-
     def __summed_difference_flattened(self, x):
         two_cocycle = two_cocycle_from_flat(x, self.group, self.base)
+        tool = TwoCocycleTools(two_cocycle)
+        return tool.summed_difference(norm=Norms.complex_euclidean)
+
+    def __summed_difference_flattened_simplified(self, x, positions):
+        two_cocycle = two_cocycle_from_flat_simplified(x, self.group, self.base, positions)
         tool = TwoCocycleTools(two_cocycle)
         return tool.summed_difference(norm=Norms.complex_euclidean)
 
@@ -75,9 +84,9 @@ class Solver:
             return False
 
         if result.fun < self.max_error:
-            factor = result.x[-len(self.base)]
+            # factor = result.x[-len(self.base)]
             with open(file, "a") as file_object:
-                file_object.write(self.__list_to_string(result.x, factor) + "\n")
+                file_object.write(self.__list_to_string(result.x) + "\n")
                 file_object.write(str(result.fun) + "\n\n")
                 file_object.close()
             return True
