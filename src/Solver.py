@@ -1,11 +1,11 @@
-from datetime import time
+import time
 
 import numpy as np
-import time
 from scipy.optimize import minimize
 
-from Evaluation.Auxiliary.Reformatting import two_cocycle_from
+from Evaluation.Auxiliary.Reformatting import two_cocycle_from_flat
 from src import Norms
+from src.NumericalBase import NumericalBase
 from src.TwoCocycleTools import TwoCocycleTools
 
 
@@ -36,9 +36,7 @@ class Solver:
         pass
 
     def __summed_difference_flattened(self, x):
-        q = np.array([x[i] for i in range(self.dimension - len(self.base), self.dimension)])
-        R = np.array(x[:self.dimension - len(self.base)]).reshape((self.order - 1, self.order - 1, len(self.base)))
-        two_cocycle = two_cocycle_from(q, R, self.group, self.base)
+        two_cocycle = two_cocycle_from_flat(x, self.group, self.base)
         tool = TwoCocycleTools(two_cocycle)
         return tool.summed_difference(norm=Norms.complex_euclidean)
 
@@ -47,6 +45,14 @@ class Solver:
             if abs(i) < self.zero_range:
                 return True
         return False
+
+    def __any_is_zero_eval(self, two_cocycle):
+        numerical_base = NumericalBase(self.base)
+        for row in two_cocycle.mapping:
+            for c in row:
+                if Norms.complex_euclidean(numerical_base.evaluate(c)) < self.zero_range:
+                    return False
+        return True
 
     def __gather_starting_points(self, n, k, bound=1):
         starts = list()
@@ -62,23 +68,26 @@ class Solver:
         result = minimize(f, x0, method=method)
         duration = time.time() - start
         print(f"A calculation has completed, took {duration}s")
-        for i in range(0, len(result.x) - 1, 2):
-            if Norms.euclidean([result.x[i], result.x[i + 1]]) < self.zero_range:
-                print("Solution declined, is 0 somewhere")
-                return False
+
+        two_cocycle = two_cocycle_from_flat(result.x, self.group, self.base)
+        if self.__any_is_zero_eval(two_cocycle):
+            print("Solution declined, is 0 somewhere")
+            return False
 
         if result.fun < self.max_error:
+            factor = result.x[-len(self.base)]
             with open(file, "a") as file_object:
-                file_object.write(self.__list_to_string(result.x) + "\n")
+                file_object.write(self.__list_to_string(result.x, factor) + "\n")
                 file_object.write(str(result.fun) + "\n\n")
                 file_object.close()
             return True
         else:
-            print("Accuracy was not achieved, average error is: " + str(result.fun))
+            print(f"Accuracy was not achieved, average error is: {result.fun}")
             return False
 
-    def __list_to_string(self, L):
+    @staticmethod
+    def __list_to_string(L, factor=1):
         string = ""
         for l in L:
-            string = string + str(l) + ";"
+            string = string + str(l / factor) + ";"
         return string[:-1]

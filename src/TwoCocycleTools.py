@@ -1,6 +1,7 @@
 import numpy as np
 
-from src import NumericalBase, Norms
+from src import Norms
+from src.NumericalBase import NumericalBase
 
 
 class TwoCocycleTools:
@@ -10,13 +11,14 @@ class TwoCocycleTools:
         self.two_cocycle = two_cocycle
         self.group = two_cocycle.group
         self.base = two_cocycle.base
+        self.numerical_base = NumericalBase(self.base)
 
     def __are_close(self, x, y):
         distance = np.sqrt((x.real - y.real) ** 2 + (x.imag - y.imag) ** 2)
         return distance < self.delta
 
     def __eval(self, x):
-        return NumericalBase.eval(self.base, x)
+        return self.numerical_base.evaluate(x)
 
     def evaluate_left(self, g, h, k):
         first_result = self.two_cocycle.evaluate(g, h)
