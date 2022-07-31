@@ -21,3 +21,33 @@ def two_cocycle_from_flat(x, group, base):
     R = [float(y) for y in x[:dimension - len(base)]]
     R = np.array(R).reshape((order - 1, order - 1, len(base)))
     return two_cocycle_from(q, R, group, base)
+
+
+def two_cocycle_from_flat_simplified(x, group, base, positions):
+    dimension = ((len(group.elements) - 1) ** 2) * len(positions) + len(positions)
+    order = len(group.elements)
+    q_1 = [float(x[dimension - len(positions) + i]) for i in range(len(positions))]
+    q = extend_vector(q_1, len(base), positions)
+    R = []
+    row = list()
+    i = 0
+    while i <= dimension - len(positions):
+        r = list()
+        if i > 0 and i % ((order - 1) * len(positions)) == 0:
+            R.append(row)
+            row = list()
+        for _ in positions:
+            r.append(float(x[i]))
+            i = i + 1
+        row.append(extend_vector(r, len(base), positions))
+    R = np.array(R).reshape((order - 1, order - 1, len(base)))
+    return two_cocycle_from(q, R, group, base)
+
+
+def extend_vector(short, length, positions):
+    long = [0 for _ in range(length)]
+    last_position = 0
+    for position in positions:
+        long[position] = short[last_position]
+        last_position = last_position + 1
+    return long

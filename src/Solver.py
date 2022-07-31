@@ -20,20 +20,24 @@ class Solver:
 
     def gather_two_cocycle_candidates(self, attempts=1, bound=1, method="BFGS", file="two_cocycles"):
         f = self.__summed_difference_flattened
-        self.__gather_candidates(f, attempts, bound, method, file)
+        formatter = two_cocycle_from_flat
+        self.__gather_candidates(f, self.dimension, formatter, attempts, bound, method, file)
 
     def gather_two_cocycle_candidates_simplified(self, positions, attempts=1, bound=1,
-                                                 method="BFGS", file="two_cocycles"):
+                                                 method="BFGS", file="two_cocycles_simplified"):
+        file = file + "_p" + str(positions)
         f = lambda x: self.__summed_difference_flattened_simplified(x, positions)
-        self.__gather_candidates(f, attempts, bound, method, file)
+        dimension = ((self.order - 1) ** 2) * len(positions) + len(positions)
+        formatter = lambda x, group, base: two_cocycle_from_flat_simplified(x, group, base, positions)
+        self.__gather_candidates(f, dimension, formatter, attempts, bound, method, file)
 
-    def __gather_candidates(self, f, attempts=1, bound=1, method="BFGS", file="two_cocycles"):
+    def __gather_candidates(self, f, k, formatter, attempts=1, bound=1, method="BFGS", file="two_cocycles"):
         count = 0
         attempt = 1
-        while attempt < attempts:
+        while attempt <= attempts:
             print(f"\nAttempt {attempt} out of {attempts}")
-            start = self.__gather_starting_points(1, self.dimension, bound)[0]
-            is_nonzero = self.__minimize_and_save(f, start, method, file)
+            start = self.__gather_starting_points(1, k, bound)[0]
+            is_nonzero = self.__minimize_and_save(f, start, method, formatter, file)
             if is_nonzero:
                 count = count + 1
                 print(f"Found a candidate! In total {count} additional candidates were saved to {file}!")
@@ -60,8 +64,8 @@ class Solver:
         for row in two_cocycle.mapping:
             for c in row:
                 if Norms.complex_euclidean(numerical_base.evaluate(c)) < self.zero_range:
-                    return False
-        return True
+                    return True
+        return False
 
     def __gather_starting_points(self, n, k, bound=1):
         starts = list()
@@ -72,13 +76,14 @@ class Solver:
             starts.append(np.random.rand(k))
         return np.array([x * bound for x in starts])
 
-    def __minimize_and_save(self, f, x0, method, file):
+    def __minimize_and_save(self, f, x0, method, formatter, file):
         start = time.time()
         result = minimize(f, x0, method=method)
         duration = time.time() - start
+        duration = "{:.2f}".format(duration)
         print(f"A calculation has completed, took {duration}s")
 
-        two_cocycle = two_cocycle_from_flat(result.x, self.group, self.base)
+        two_cocycle = formatter(result.x, self.group, self.base)
         if self.__any_is_zero_eval(two_cocycle):
             print("Solution declined, is 0 somewhere")
             return False
