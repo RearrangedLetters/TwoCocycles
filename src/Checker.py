@@ -16,25 +16,23 @@ Q.<theta, omega> = NumberField([x^3 - 2, x^2 + x + 1])
 base = (1, theta, theta ** 2, omega, omega * theta, omega * theta ** 2)
 order = len(base)
 cayley_table = {cayley_table}
-print(cayley_table)
 
-delta = Rational(2)
-gamma = Rational(1)
-
+delta = Rational((212305962435342, 34732938946034532445))
+gamma = Rational((23183275331455435, 234235864325))
 ext(q) = [q, Rational(0), Rational(0), Rational(0), Rational(0), Rational(0)]
 one = ext(1)
-deltagamma = ext(delta * gamma)
+gammadelta = ext(gamma * delta)
 delta = ext(delta)
 gamma = ext(gamma)
 
-# mapping = [[one, one, delta, gamma, gamma, deltagamma],
-#            [one, delta, delta, gamma, deltagamma, deltagamma],
-#            [delta, delta, delta, deltagamma, deltagamma, deltagamma],
-#            [gamma, gamma, deltagamma, gamma, gamma, deltagamma],
-#            [gamma, deltagamma, deltagamma, gamma, deltagamma, deltagamma],
-#            [deltagamma, deltagamma, deltagamma, deltagamma, deltagamma, deltagamma]]
+mapping = [[one, one, delta, gamma, gamma, gammadelta],
+           [one, delta, delta, gamma, gammadelta, gammadelta],
+           [delta, delta, delta, gammadelta, gammadelta, gammadelta],
+           [gamma, gamma, gammadelta, gamma, gamma, gammadelta],
+           [gamma, gammadelta, gammadelta, gamma, gammadelta, gammadelta],
+           [gammadelta, gammadelta, gammadelta, gammadelta, gammadelta, gammadelta]]
 
-mapping = {mapping}
+# mapping = {mapping}
 
 def eval_vec(x):
     result = 0
@@ -71,7 +69,8 @@ def summed_difference():
                 sum = sum + evaluate(g, h, k)
     return sum / order ** 3
 
-print(summed_difference().abs(prec=100))
+# print(summed_difference().abs(prec=1000))
+print(summed_difference())
 """
 
 
