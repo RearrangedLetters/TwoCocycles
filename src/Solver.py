@@ -10,7 +10,7 @@ from src.TwoCocycleTools import TwoCocycleTools
 
 
 class Solver:
-    def __init__(self, group, base, zero_range=1e-3, max_error=1e-6):
+    def __init__(self, group, base, zero_range=1e-3, max_error=1e-7):
         self.group = group
         self.base = base
         self.zero_range = zero_range

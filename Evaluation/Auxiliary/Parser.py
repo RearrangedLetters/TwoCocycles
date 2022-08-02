@@ -11,7 +11,7 @@ def parse_two_cocycles(group, base, file="two_cocycles"):
     return two_cocycles
 
 
-def parse_two_cocycles_simplified(group, base, positions, file="two_cocycles"):
+def parse_two_cocycles_simplified(group, base, positions, file="two_cocycles_simplified"):
     with open(file) as f:
         lines = f.readlines()
     two_cocycles = list()

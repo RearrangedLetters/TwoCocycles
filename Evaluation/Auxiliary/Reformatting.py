@@ -51,3 +51,13 @@ def extend_vector(short, length, positions):
         long[position] = short[last_position]
         last_position = last_position + 1
     return long
+
+
+def to_pure_python(mapping):
+    mapping_list = list()
+    for row in mapping:
+        r = list()
+        for entry in row:
+            r.append(list(entry))
+        mapping_list.append(r)
+    return mapping_list
