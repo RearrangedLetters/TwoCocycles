@@ -1,22 +1,23 @@
 import subprocess
 
+from Evaluation.Auxiliary.Parser import parse_two_cocycles_simplified
+from Evaluation.Auxiliary.Reformatting import to_pure_python
 from Evaluation.G.G import G
+from Evaluation.QStar import Q_star
 
 cayley_table = G.cayley_table
 order = len(G.elements)
-mapping = list()
+file = "../Evaluation/G/two_cocycles_simplified_p(0, 3)"
+two_cocycle = parse_two_cocycles_simplified(G, Q_star.base, (0, 3), file)[0]
+mapping = to_pure_python(two_cocycle.mapping)
 
 sage_code = f"""
 Q.<theta, omega> = NumberField([x^3 - 2, x^2 + x + 1])
 base = (1, theta, theta ** 2, omega, omega * theta, omega * theta ** 2)
 order = len(base)
-# cayley_table = {cayley_table}
-cayley_table = [[0, 1, 2, 3, 4, 5],
-                [1, 2, 0, 5, 3, 4],
-                [2, 0, 1, 4, 5, 3],
-                [3, 4, 5, 0, 1, 2],
-                [4, 5, 3, 2, 0, 1],
-                [5, 3, 4, 1, 2, 0]]
+cayley_table = {cayley_table}
+print(cayley_table)
+
 delta = Rational(2)
 gamma = Rational(1)
 
@@ -26,14 +27,14 @@ deltagamma = ext(delta * gamma)
 delta = ext(delta)
 gamma = ext(gamma)
 
-mapping = [[one, one, delta, gamma, gamma, deltagamma],
-           [one, delta, delta, gamma, deltagamma, deltagamma],
-           [delta, delta, delta, deltagamma, deltagamma, deltagamma],
-           [gamma, gamma, deltagamma, gamma, gamma, deltagamma],
-           [gamma, deltagamma, deltagamma, gamma, deltagamma, deltagamma],
-           [deltagamma, deltagamma, deltagamma, deltagamma, deltagamma, deltagamma]]
+# mapping = [[one, one, delta, gamma, gamma, deltagamma],
+#            [one, delta, delta, gamma, deltagamma, deltagamma],
+#            [delta, delta, delta, deltagamma, deltagamma, deltagamma],
+#            [gamma, gamma, deltagamma, gamma, gamma, deltagamma],
+#            [gamma, deltagamma, deltagamma, gamma, deltagamma, deltagamma],
+#            [deltagamma, deltagamma, deltagamma, deltagamma, deltagamma, deltagamma]]
 
-# mapping = {mapping}
+mapping = {mapping}
 
 def eval_vec(x):
     result = 0
@@ -67,15 +68,12 @@ def summed_difference():
     for g in range(order):
         for h in range(order):
             for k in range(order):
-                sum = sum + evaluate(g, h, k).norm()
+                sum = sum + evaluate(g, h, k)
     return sum / order ** 3
 
-print(summed_difference())
-# print(eval_vec([1, 1, 1, 1, 1, 1]))
-# print(Rational(deltagamma[0]) * omega)
+print(summed_difference().abs(prec=100))
 """
 
 
 result = subprocess.run(["sage", "-c", sage_code], stdout=subprocess.PIPE)
 print(result.stdout.decode("utf-8"))
-
