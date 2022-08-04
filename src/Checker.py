@@ -17,8 +17,8 @@ base = (1, theta, theta ** 2, omega, omega * theta, omega * theta ** 2)
 order = len(base)
 cayley_table = {cayley_table}
 
-delta = Rational((212305962435342, 34732938946034532445))
-gamma = Rational((23183275331455435, 234235864325))
+delta = Rational((292634, 23))
+gamma = Rational((967433, 341))
 ext(q) = [q, Rational(0), Rational(0), Rational(0), Rational(0), Rational(0)]
 one = ext(1)
 gammadelta = ext(gamma * delta)
@@ -68,6 +68,12 @@ def summed_difference():
             for k in range(order):
                 sum = sum + evaluate(g, h, k)
     return sum / order ** 3
+
+def norm(x):
+    prod = 1
+    for g in elements:
+        prod = prod * eval_vec(g(x))
+    return prod
 
 # print(summed_difference().abs(prec=1000))
 print(summed_difference())
