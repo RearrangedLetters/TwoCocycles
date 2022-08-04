@@ -25,12 +25,12 @@ gammadelta = ext(gamma * delta)
 delta = ext(delta)
 gamma = ext(gamma)
 
-mapping = [[one, one, delta, gamma, gamma, gammadelta],
-           [one, delta, delta, gamma, gammadelta, gammadelta],
-           [delta, delta, delta, gammadelta, gammadelta, gammadelta],
-           [gamma, gamma, gammadelta, gamma, gamma, gammadelta],
-           [gamma, gammadelta, gammadelta, gamma, gammadelta, gammadelta],
-           [gammadelta, gammadelta, gammadelta, gammadelta, gammadelta, gammadelta]]
+mapping = [[one, one, one, one, one, one],
+           [one, one, delta, one, one, delta],
+           [one, delta, delta, one, delta, delta],
+           [one, one, one, gamma, gamma, gamma],
+           [one, one, delta, gamma, gamma, gammadelta],
+           [one, delta, delta, gamma, gammadelta, gammadelta]]
 
 # mapping = {mapping}
 
