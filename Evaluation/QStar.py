@@ -58,7 +58,7 @@ Q_star = ExtensionField(base, automorphisms)
 
 
 def norm(x):
-    prod = 0
+    prod = 1
     for g in automorphisms:
         prod = prod * g.apply(x)
     return prod
