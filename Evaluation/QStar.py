@@ -55,3 +55,10 @@ cd2 = FieldAutomorphism(base, lambda x: c.apply(d2.apply(x)))
 automorphisms = (id, d, d2, c, cd, cd2)
 
 Q_star = ExtensionField(base, automorphisms)
+
+
+def norm(x):
+    prod = 0
+    for g in automorphisms:
+        prod = prod * g.apply(x)
+    return prod
