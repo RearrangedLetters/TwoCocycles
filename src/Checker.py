@@ -75,7 +75,7 @@ def norm(x):
         prod = prod * eval_vec(g(x))
     return prod
 
-# print(summed_difference().abs(prec=1000))
+# print(summed_difference().abs(prec=1001))
 print(summed_difference())
 """
 
